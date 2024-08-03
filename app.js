@@ -4,6 +4,9 @@ const socketIo = require('socket.io')
 const TelegramBot = require('node-telegram-bot-api');
 
 
+
+
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -15,12 +18,20 @@ const chatID = '1779499306'
 
 const bot = new TelegramBot (TOKEN, { polling: true});
 
-// bot.sendMessage(chatID, 'hello');
 
+.then(() => {
+    console.log(`Connected to mongo DB`)
+})
+const userCount = new mongoose.Schema({
+    userCount: {type: Number, default: 0}
+})
+
+const count = mongoose.model('userCount', userCount)
 
 io.on('connection', (socket) => {
     console.log('New user connecter');
     bot.sendMessage(chatID, 'Новий користувач на сайті');
+    const count = await 
     socket.on('disconnect', () => {
         console.log(`User disconnected`);
     })
